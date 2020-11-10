@@ -16,7 +16,7 @@ Plug 'jeffkreeftmeijer/vim-dim'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'branch': 'release/1.x' }
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 call plug#end()
 
 
@@ -76,11 +76,13 @@ vmap <silent> <leader>/ gc
 nmap gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
 " Switch between the last two files
 nnoremap <leader><leader> <C-^>
+nnoremap <leader>s :set spell! spelllang=en_us<CR>
 
 
 """"""""""""""""
-"  naviagtion  "
+"  navigation  "
 """"""""""""""""
+set scrolloff=10
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
@@ -92,7 +94,7 @@ nnoremap <C-l> <C-w>l
 """"""""""""""
 let g:prettier#autoformat=0
 autocmd BufWritePre
-  \ *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html
+  \ *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.mdx,*.vue,*.yaml,*.html
   \ PrettierAsync
 
 
@@ -104,8 +106,7 @@ let g:netrw_liststyle=3
 let g:netrw_browse_split=4
 let g:netrw_altv=1
 let g:netrw_winsize=-38
-" set hidden / prevent yank registers getting emptied on netrw navigation
-au BufWinEnter * set hidden
+
 " Toggle explore with leader tab
 function! ToggleNetrw()
   let i = bufnr("$")
@@ -121,8 +122,12 @@ function! ToggleNetrw()
     silent Vexplore
   endif
 endfunction
+
 augroup ProjectDrawer
   autocmd!
+
+  " set hidden / prevent yank registers getting emptied on netrw navigation
+  autocmd BufWinEnter * set hidden
   autocmd VimEnter * if argc() == 0 | :call ToggleNetrw() | endif
 augroup END
 
@@ -146,3 +151,37 @@ augroup Zen
 augroup END
 
 colorscheme dim
+
+
+"""""""""""""""
+"  filetypes  "
+"""""""""""""""
+augroup vimrcEx
+  autocmd!
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
+  " Set syntax highlighting for specific file types
+  autocmd BufRead,BufNewFile *.md,*.mdx set filetype=markdown
+  autocmd BufRead,BufNewFile .{prettier,eslint}rc set filetype=json
+  autocmd BufRead,BufNewFile zshrc.local,*/zsh/* set filetype=sh
+  autocmd BufRead,BufNewFile gitconfig.local set filetype=gitconfig
+  autocmd BufRead,BufNewFile vimrc.local set filetype=vim
+
+  " Enable spellchecking for Markdown
+  " autocmd FileType markdown setlocal spell
+
+  " Automatically wrap at 80 characters for Markdown
+  " autocmd BufRead,BufNewFile *.md,*.mdx setlocal textwidth=80
+  autocmd BufRead,BufNewFile *.md,*.mdx setlocal wrap linebreak nolist textwidth=0 wrapmargin=0
+  " autocmd BufRead,BufNewFile *.md,*.mdx let b:softwrap=1
+  " autocmd BufRead,BufNewFile *.md,*.mdx set columns=80
+  " au BufRead,BufNewFile *.txt,*.tex set wrap linebreak nolist textwidth=0 wrapmargin=0
+  " autocmd BufRead,BufNewFile *.md setlocal formatoptions+=a
+augroup END
