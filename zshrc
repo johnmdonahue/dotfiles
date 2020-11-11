@@ -26,7 +26,7 @@ prompt pure
 #############
 alias l='ls -lAhFG'
 alias ..='cd ..'
-alias todo='cd ~/Desktop/Notes && vi todo.md'
+alias todo='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Desktop/Notes && vi todo.md'
 alias g='git status'
 alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset" --abbrev-commit --date=relative'
 alias gad='git add .'

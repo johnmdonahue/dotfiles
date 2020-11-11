@@ -9,6 +9,12 @@ set nomodeline
 """""""""""""
 "  plugins  "
 """""""""""""
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
@@ -23,6 +29,15 @@ call plug#end()
 """"""""""
 "  undo  "
 """"""""""
+if empty(glob('~/.vim/undo'))
+  silent !mkdir -p ~/.vim/undo
+endif
+if empty(glob('~/.vim/swp'))
+  silent !mkdir -p ~/.vim/swp
+endif
+if empty(glob('~/.vim/backup'))
+  silent !mkdir -p ~/.vim/backup
+endif
 set undofile
 set undodir=~/.vim/undo/
 set directory=~/.vim/swp/
