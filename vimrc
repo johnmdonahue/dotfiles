@@ -22,6 +22,7 @@ Plug 'jeffkreeftmeijer/vim-dim'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 call plug#end()
 
@@ -108,6 +109,7 @@ nnoremap <C-l> <C-w>l
 "  prettier  "
 """"""""""""""
 let g:prettier#autoformat=0
+let g:prettier#autoformat_config_present=1
 autocmd BufWritePre
   \ *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.mdx,*.vue,*.yaml,*.html
   \ PrettierAsync

@@ -1,6 +1,7 @@
 # Dotfiles
 
 ```
+npm install --global pure-prompt
 cd
 git clone git@github.com:johnmdonahue/dotfiles.git
 cd dotfiles

@@ -1,15 +1,16 @@
+source ~/.env
+
 #############
 #  general  #
 #############
-fpath+=(~/dotfiles/zsh $fpath)
 export EDITOR="vim"
+export HISTCONTROL=ignoredups
 # tab complete cycles matches without menu
 setopt menucomplete
 setopt noautolist
 # up / down searches history
 bindkey '\e[A' history-beginning-search-backward
 bindkey '\e[B' history-beginning-search-forward
-
 
 ############
 #  prompt  #
@@ -26,7 +27,7 @@ prompt pure
 #############
 alias l='ls -lAhFG'
 alias ..='cd ..'
-alias todo='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Desktop/Notes && vi todo.md'
+alias notes='code ~/Library/Mobile\ Documents/com~apple~CloudDocs/Notes'
 alias g='git status'
 alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset" --abbrev-commit --date=relative'
 alias gad='git add .'
